@@ -1,0 +1,19 @@
+﻿= Java Part 3 - Exercices
+
+Exercices for Java practise
+
+== GIT
+
+* install GIT if you don't have it yet
+
+== GitHub
+
+* create account
+* create new repository
+* clone repository locally
+* push all changes from exercices to remote repository
+
+== Java
+
+Perform tasks from a `zadania3.pdf` file.
+Author of this tasks is my colleague. 

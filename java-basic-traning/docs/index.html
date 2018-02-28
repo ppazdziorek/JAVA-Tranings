@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Krzysztof Chruściel - Java - Beyond the Basics</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Java</h1>
+					<h3>Beyond the Basics</h3>
+					<h5 class="fragment" data-fragment-index="1">Krzysztof Chruściel</h5>
+					<h5 class="fragment" data-fragment-index="2">Diebold-Nixdorf</h5>
+				</section>
+				<section data-background-image="http://www.programcreek.com/wp-content/uploads/2013/04/java-bytecode-example.png">
+				</section>
+				<section>
+					<h1>JVM</h1>
+					<h4>Java Virtual Machine</h4>
+				</section>
+				<section>
+					<h2>Live cycle</h2>
+					<p class="fragment" data-fragment-index="1">source -> javac -> bytecode</p>
+					<p class="fragment" data-fragment-index="2">bytecode -> classloader -> interpreter</p>
+					<p class="fragment" data-fragment-index="3">interpreter -> JIT -> optimized native code</p>
+				</section>
+				<section>
+					<h2>Source code</h2>
+					<pre><code data-trim data-noescape>
+					/**
+					 * Created by Krzysztof Chruściel.
+					 */
+					public interface TodoRepository extends JpaRepository<Todo, Long> {
+
+						List<Todo> findByTitle(String title);
+
+					}
+					</code></pre>
+				</section>
+				<section>
+					<h2>JavaC</h2>
+					<img data-src="images/javac.png">
+				</section>
+				<section>
+					<h2>JavaC</h2>
+					<ul>
+						<li>converts source code into byte code</li>
+						<li>checks</li>
+						<li>simple optimizations</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Bytecode</h2>
+					<p>List of operation codes</p>
+					<pre><code data-trim data-noescape>
+					iload_1             => 1b
+					iconst_1            => 04
+					if_icmpge       44  => a0
+					iconst_1            => 04
+					ireturn             => ac
+					</pre></code>
+				</section>
+				<section>
+					<h2>Classloader</h2>
+					<p>dynamically loads classes<p>
+				</section>
+				<section>
+					<h2>Interpreter</h2>
+					<p>template interpreter</p>
+					<p>detect hot spots</p>
+				</section>
+				<section>
+					<h2>JIT</h2>
+					<p>Just-In-Time<p>
+					<p>Compiles method into native code</p>
+					<p>Optimizations</p>
+				</section>
+				<section>
+					<h1>All about stack</h1>
+				</section>
+				<section>
+					<h2>Memory blocks</h2>
+					<p class="fragment" data-fragment-index="1">program counter register</p>
+					<p class="fragment" data-fragment-index="2">frame</p>
+					<p class="fragment" data-fragment-index="3">stack</p>
+				</section>
+				<section>
+					<h2>Example</h2>
+				</section>
+				<section>
+					<h2>Stack trace</h2>
+					<pre><code data-trim data-noescape>
+					Exception in thread "main" java.lang.NullPointerException
+						at com.example.myproject.Book.getTitle(Book.java:16)
+						at com.example.myproject.Author.getBookTitles(Author.java:25)
+						at com.example.myproject.Bootstrap.main(Bootstrap.java:14)
+					</pre></code>
+					<pre><code data-trim data-noescape>
+					15   public String getTitle() {
+					16      System.out.println(title.toString());
+					17      return title;
+					18   }
+					</pre></code>
+				</section>
+				<section>
+					<h2>Catch</h2>
+					<pre><code data-trim data-noescape>
+					34   public void getBookIds(int id) {
+					35      try {
+					36         book.getId(id);    // this method it throws a NullPointerException on line 22
+					37      } catch (NullPointerException e) {
+					38         throw new IllegalStateException("A book has a null property", e)
+					39      }
+					40   }
+					</pre></code>
+					<pre><code data-trim data-noescape>
+					Exception in thread "main" java.lang.IllegalStateException: A book has a null property
+							at com.example.myproject.Author.getBookIds(Author.java:38)
+							at com.example.myproject.Bootstrap.main(Bootstrap.java:14)
+					Caused by: java.lang.NullPointerException
+							at com.example.myproject.Book.getId(Book.java:22)
+							at com.example.myproject.Author.getBookIds(Author.java:36)
+							... 1 more
+					</pre></code>
+				</section>
+				<section data-background-image="https://www.protechtraining.com/static/bookshelf/java_fundamentals_tutorial/images/ExceptionClassHierarchy.png.pagespeed.ce.fkR1yFOggP.png">
+				</section>
+				<section>
+					<h1>Thanks</h1>
+					<p>Krzysztof Chruściel</p>
+					<p>krzysztof.chrusciel@outlook.com</p>
+					<p>codecouple.pl</p>
+					<p>github.com/kchrusciel/Diebold-Nixdorf-Tranings</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
